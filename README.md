@@ -17,7 +17,7 @@ My plan is to make a suite of tools and templates that faciliate the generation 
 1. [swagger-template], just some HTML files that should theoretically be useful for generating static HTML documentation for a Swagger-compliant API.
 2. [swagger-enhance], a little Node utility for grabbing a Swagger API's JSON and "enhancing" it with JSON data from each of its own endpoints (confusingly, "apis", in Swagger parlance).
 
-The missing piece is a tool I'm referring to as `swagger-static`, which would take a `swagger-enhance`d JSON representation of an API's metadata and a template to produce static docs in whatever form you want: primarily HTML, but [Markdown] might also be useful for [Jekyll] sites.
+The missing piece is a tool I'm referring to as `swagger-static`, which would take a "enhanced" JSON representation of an API's metadata and a template to produce static docs in whatever form you want: primarily HTML, but [Markdown] might also be useful for [Jekyll] sites.
 
 [18F]: https://18f.gsa.gov
 [issues]: https://github.com/shawnbot/swagger-static/issues

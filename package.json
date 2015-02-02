@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "Generate Swagger documentation, statically",
   "main": "index.js",
+  "bin": {
+    "stag": "bin/stag"
+  },
   "scripts": {
     "test": "mocha"
   },

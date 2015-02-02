@@ -12,14 +12,22 @@ Usage: swagger-static [ options ] <url> <template> [<output>]
 
 Arguments:
 
-  <url> is a Swagger-compliant JSON URL
-  <template> is not
+  <url> is a Swagger-compliant JSON URL, e.g.
+    http://petstore.swagger.wordnik.com/api/api-docs
+
+  <template> is either a qualified filename, or a template name in one of the
+    template paths indicated in one or more -p | --path options.
+
+  <output> is an optional filename to which the rendered template should be
+    written, or a directory to which multiple files should be written if
+    --dir is specified.
 
 Examples:
 
-  swagger-static $API_URL template.html output.html
+  $ swagger-static $API_URL template.html output.html
 
-  swagger-static $API_URL template.html > output.html
+  $ swagger-static $API_URL template.html > output.html
+
       */}))
       .demand(2)
       .boolean("help")
@@ -100,7 +108,7 @@ function main(url, template, output, options) {
 
   function writeDirectory(data, done) {
     return env.renderDirectory(template, output, data, done)
-      .on("file", function(infile, outfile) {
+      .on("render", function(infile, outfile) {
         LOG("rendered:", infile, "->", outfile);
       });
   }

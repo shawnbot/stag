@@ -1,0 +1,120 @@
+#!/usr/bin/env node
+var stag = require("../"),
+    path = require("path"),
+    rw = require("rw"),
+    request = require("request"),
+    enhance = require("swagger-enhance"),
+    async = require("async"),
+    multiline = require("multiline"),
+    yargs = require("yargs")
+      .usage(multiline(function() {/*
+Usage: swagger-static [ options ] <url> <template> [<output>]
+
+Arguments:
+
+  <url> is a Swagger-compliant JSON URL
+  <template> is not
+
+Examples:
+
+  swagger-static $API_URL template.html output.html
+
+  swagger-static $API_URL template.html > output.html
+      */}))
+      .demand(2)
+      .boolean("help")
+        .alias("h", "help")
+      .boolean("d")
+        .alias("d", "dir")
+        .describe("d", "process <template> as a directory of files")
+      .string("p")
+        .alias("p", "path")
+        .describe("p", "add this directory to the list of template paths")
+      .boolean("a")
+        .alias("a", "autoescape")
+        .describe("a", "auto-escape HTML in template tags")
+      .boolean("e")
+        .alias("e", "enhanced")
+        .describe("e", "indicates that the Swagger JSON is already 'enhanced'"),
+    options = yargs.argv,
+    argc = options._;
+
+if (options.help) {
+  yargs.showHelp();
+  process.exit(1);
+}
+
+main(
+  argc.shift(),
+  dash(argc.shift(), "/dev/stdin"),
+  argc.shift() || "/dev/stdout",
+  options
+);
+
+function main(url, template, output, options) {
+  var paths = ["."].concat(options.path),
+      env = new stag.Renderer(paths, {
+        autoescape: options.autoescape
+      });
+
+  LOG("template paths:", options.path);
+
+  var read = options.enhanced
+    ? function(done) { readEnhancedURL(url, done); }
+    : function(done) { readPlainURL(url, done); };
+
+  var write = options.dir
+    ? writeDirectory
+    : writeFile;
+
+  return async.waterfall([
+    read,
+    write
+  ], function allDone(error) {
+    if (error) {
+      return ERROR(error);
+    }
+    LOG("all done!");
+    process.exit(0);
+  });
+
+  function readPlainURL(url, done) {
+    LOG("enhancing JSON from:", url);
+    return enhance.url(url, done);
+  }
+
+  function readEnhancedURL(url, done) {
+    LOG("reading enhanced JSON from:", url);
+    request(url, function onRequest(error, response, body) {
+      if (error || response.statusCode !== 200) return done(error);
+      done(null, JSON.parse(body));
+    });
+  }
+
+  function writeFile(data, done) {
+    return env.render(template, data, function onRender(error, content) {
+      if (error) return done(error);
+      rw.writeFile(output, content, done);
+    });
+  }
+
+  function writeDirectory(data, done) {
+    return env.renderDirectory(template, output, data, done)
+      .on("file", function(infile, outfile) {
+        LOG("rendered:", infile, "->", outfile);
+      });
+  }
+}
+
+function dash(path, def) {
+  return path === "-" ? def : path || def;
+}
+
+function LOG() {
+  console.warn.apply(console, arguments);
+}
+
+function ERROR() {
+  console.error.apply(console, arguments);
+  process.exit(1);
+}

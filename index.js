@@ -8,18 +8,16 @@ var pkg = require("./package.json"),
     events = require("events"),
     request = require("request");
 
-var Renderer = function(paths, options) {
-  var loader = new nj.FileSystemLoader(paths);
-  options = extend({}, Renderer.defaults, options);
-  nj.Environment.call(this, loader, options);
-};
-
-Renderer.defaults = {
-  autoescape: false,
-  tags: {}
-};
-
-Renderer.prototype = extend(nj.Environment.prototype, {
+var Environment = nj.Environment.extend({
+  init: function(paths, options) {
+    return nj.Environment.call(
+      this, 
+      paths.map(function(dir) {
+        return new nj.FileSystemLoader(dir);
+      }),
+      options
+    );
+  },
   renderDirectory: function(inDir, outDir, context, done) {
     // errors should be fatal if there's no callback
     if (!done) {
@@ -52,9 +50,5 @@ Renderer.prototype = extend(nj.Environment.prototype, {
  */
 module.exports = {
   version: pkg.version,
-  Renderer: Renderer
+  Environment: Environment
 };
-
-function coerceArray(thing) {
-  return Array.isArray(thing) ? thing : [thing];
-}

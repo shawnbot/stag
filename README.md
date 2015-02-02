@@ -4,7 +4,7 @@ A plan for a better [Swagger] API documentation generator.
 See the [issues] for more info, and comment on one or [file an issue] if you have suggestions.
 
 ## Background
-At 18F we're making [Swagger]-compliant APIs to make them more accessible and facilitate simpler documentation. Unfortunately, the only generally accepted way of exposing human-readable Swagger API documentation is [SwaggerUI], a client-side JavaScript library with some non-trivail shortcomings:
+At [18F] we're making [Swagger]-compliant APIs to make them more accessible and facilitate simpler documentation. Unfortunately, the only generally accepted way of exposing human-readable Swagger API documentation is [SwaggerUI], a client-side JavaScript library with some non-trivail shortcomings:
 
 1. Because all SwaggerUI-based documentation is rendered at runtime, search engines are [[theoretically](https://developers.google.com/webmasters/ajax-crawling/)] unable to crawl their contents.
 1. Tight coupling with jQuery and a [long list of dependencies](https://github.com/swagger-api/swagger-ui/blob/master/dist/index.html#L10-L21) means that you've got to include everything they include, or it just won't run.

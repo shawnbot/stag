@@ -5,7 +5,6 @@ var pkg = require("./package.json"),
     extend = require("util-extend"),
     path = require("path"),
     mkdirp = require("mkdirp"),
-    events = require("events"),
     request = require("request");
 
 var Environment = nj.Environment.extend({

@@ -8,19 +8,22 @@ var stag = require("../"),
     multiline = require("multiline"),
     yargs = require("yargs")
       .usage(multiline(function() {/*
-Usage: swagger-static [ options ] <url> <template> [<output>]
+Usage: swagger-static [ options ] <url> [ <template> [ <output> ] ]
 
 Arguments:
 
   <url> is a Swagger-compliant JSON URL, e.g.
     http://petstore.swagger.wordnik.com/api/api-docs
 
-  <template> is either a qualified filename, or a template name in one of the
-    template paths indicated in one or more -p | --path options.
+  <template> is either:
+    1. a relative filename,
+    2. a template name in one of the template paths indicated by one or more -p
+       or --path options, or
+    3. empty, "-" or "/dev/stdin" to read the template from stdin
 
   <output> is an optional filename to which the rendered template should be
     written, or a directory to which multiple files should be written if
-    --dir is specified.
+    --dir is specified. If left off, the output will be written to stdout.
 
 Examples:
 
@@ -28,8 +31,10 @@ Examples:
 
   $ swagger-static $API_URL template.html > output.html
 
+  $ echo "{{ swaggerVersion }}" | swagger-static $API_URL
+
       */}))
-      .demand(2)
+      .demand(1)
       .boolean("help")
         .alias("h", "help")
       .boolean("d")
@@ -41,43 +46,60 @@ Examples:
       .boolean("a")
         .alias("a", "autoescape")
         .describe("a", "auto-escape HTML in template tags")
+      .boolean("E")
+        .alias("E", "enhanced")
+        .describe("E", "indicates that the Swagger JSON is already 'enhanced'")
       .boolean("e")
-        .alias("e", "enhanced")
-        .describe("e", "indicates that the Swagger JSON is already 'enhanced'"),
-    options = yargs.argv,
-    argc = options._;
+        .alias("e", "encoding")
+        .describe("e", "when reading the template from stdin, use this encoding (default: 'utf8')")
+      .check(function checkArgs(argv) {
+        if (argv.help) {
+          yargs.showHelp();
+          process.exit(1);
+        }
+        if (!Array.isArray(argv.path)) {
+          argv.path = argv.path ? [argv.path] : [];
+        }
+        argv.encoding = argv.encoding || "utf8";
+      });
 
-if (options.help) {
-  yargs.showHelp();
-  process.exit(1);
-}
+var options = yargs.argv,
+    argc = options._,
+    STDIN = "/dev/stdin",
+    STDOUT = "/dev/stdout";
 
 main(
   argc.shift(),
-  dash(argc.shift(), "/dev/stdin"),
-  argc.shift() || "/dev/stdout",
+  dash(argc.shift(), STDIN),
+  argc.shift() || STDOUT,
   options
 );
 
 function main(url, template, output, options) {
   var paths = ["."].concat(options.path),
-      env = new stag.Renderer(paths, {
+      env = new stag.Environment(paths, {
         autoescape: options.autoescape
-      });
+      }),
+      fileOptions = {
+        encoding: options.encoding
+      };
 
-  LOG("template paths:", options.path);
+  // LOG("template paths:", options.path);
 
   var read = options.enhanced
-    ? function(done) { readEnhancedURL(url, done); }
-    : function(done) { readPlainURL(url, done); };
+    ? readEnhancedURL
+    : readPlainURL;
 
-  var write = options.dir
-    ? writeDirectory
-    : writeFile;
+  var render = options.dir
+    ? renderDirectory
+    : (template === STDIN)
+      ? renderString
+      : renderFile;
 
   return async.waterfall([
+    function(done) { done(null, url); },
     read,
-    write
+    render
   ], function allDone(error) {
     if (error) {
       return ERROR(error);
@@ -99,17 +121,30 @@ function main(url, template, output, options) {
     });
   }
 
-  function writeFile(data, done) {
+  function renderString(data, done) {
+    LOG("reading template from stdin...");
+    return rw.readFile(template, fileOptions, function onReadStdin(error, str) {
+      if (error) return done(error);
+      env.renderString(str, data, function onRender(error, content) {
+        if (error) return done(error);
+        rw.writeFile(output, content, done);
+      });
+    });
+  }
+
+  function renderFile(data, done) {
+    LOG("rendering from template:", template);
     return env.render(template, data, function onRender(error, content) {
       if (error) return done(error);
       rw.writeFile(output, content, done);
     });
   }
 
-  function writeDirectory(data, done) {
+  function renderDirectory(data, done) {
+    LOG("rendering directory:", template, "->", output);
     return env.renderDirectory(template, output, data, done)
       .on("render", function(infile, outfile) {
-        LOG("rendered:", infile, "->", outfile);
+        LOG("+ rendered:", infile, "->", outfile);
       });
   }
 }

@@ -9,17 +9,12 @@ var pkg = require("./package.json"),
     request = require("request");
 
 var Renderer = function(paths, options) {
+  var loader = new nj.FileSystemLoader(paths);
   options = extend({}, Renderer.defaults, options);
-
-  var loaders = coerceArray(paths).map(function(dir) {
-    return new nj.FileSystemLoader(dir);
-  });
-
-  nj.Environment.call(this, loaders, options);
+  nj.Environment.call(this, loader, options);
 };
 
 Renderer.defaults = {
-  writeOpts: {}, // e.g. {encoding: "latin-1"}
   autoescape: false,
   tags: {}
 };
@@ -33,9 +28,7 @@ Renderer.prototype = extend(nj.Environment.prototype, {
       };
     }
 
-    var that = this,
-        opts = this.options.writeOpts;
-
+    var that = this;
     walk(inDir)
       .on("error", done)
       .on("file", function(inFile, next) {
@@ -45,7 +38,7 @@ Renderer.prototype = extend(nj.Environment.prototype, {
             if (error) return done(error);
             fs.writeFile(outFile, content, opts, next);
           });
-          that.emit("file", inFile, outFile);
+          that.emit("render", inFile, outFile);
         });
       })
       .on("end", done);

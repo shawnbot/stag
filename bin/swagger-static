@@ -27,10 +27,13 @@ Arguments:
 
 Examples:
 
+  Use only positional arguments:
   $ swagger-static $API_URL template.html output.html
 
+  Produce output on stdout and redirect to a file:
   $ swagger-static $API_URL template.html > output.html
 
+  Provide the template on stdin, output on stdout:
   $ echo "{{ swaggerVersion }}" | swagger-static $API_URL
 
       */}))
@@ -109,12 +112,12 @@ function main(url, template, output, options) {
   });
 
   function readPlainURL(url, done) {
-    LOG("enhancing JSON from:", url);
+    LOG("reading and enhancing JSON from:", url);
     return enhance.url(url, done);
   }
 
   function readEnhancedURL(url, done) {
-    LOG("reading enhanced JSON from:", url);
+    LOG("reading (enhanced) JSON from:", url);
     request(url, function onRequest(error, response, body) {
       if (error || response.statusCode !== 200) return done(error);
       done(null, JSON.parse(body));

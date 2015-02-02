@@ -8,9 +8,9 @@ var stag = require("../"),
     multiline = require("multiline"),
     yargs = require("yargs")
       .usage(multiline(function() {/*
-Usage: swagger-static [ options ] <url> [ <template> [ <output> ] ]
+Swagger static generator version $v:
 
-Arguments:
+  $0 [ options ] <url> [ <template> [ <output> ] ]
 
   <url> is a Swagger-compliant JSON URL, e.g.
     http://petstore.swagger.wordnik.com/api/api-docs
@@ -36,7 +36,7 @@ Examples:
   Provide the template on stdin, output on stdout:
   $ echo "{{ swaggerVersion }}" | swagger-static $API_URL
 
-      */}))
+      */}).replace("$v", stag.version))
       .demand(1)
       .boolean("help")
         .alias("h", "help")
@@ -55,6 +55,7 @@ Examples:
       .boolean("e")
         .alias("e", "encoding")
         .describe("e", "when reading the template from stdin, use this encoding (default: 'utf8')")
+      .version(stag.version, "v", "print the version number and exit")
       .check(function checkArgs(argv) {
         if (argv.help) {
           yargs.showHelp();

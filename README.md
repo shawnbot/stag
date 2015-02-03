@@ -12,7 +12,7 @@ First, install stag via [npm]:
 npm install -g stag
 ```
 
-Next, write a simple [template]:
+Next, write a simple [template](https://docs.djangoproject.com/en/1.7/topics/templates/):
 
 ```html
 <!DOCTYPE html>

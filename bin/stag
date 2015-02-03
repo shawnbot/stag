@@ -10,7 +10,7 @@ var stag = require("../"),
       .usage(multiline(function() {/*
 Swagger static generator version $v:
 
-  $0 [ options ] <url> [ <template> [ <output> ] ]
+  stag [ options ] <url> [ <template> [ <output> ] ]
 
   <url> is a Swagger-compliant JSON URL, e.g.
     http://petstore.swagger.wordnik.com/api/api-docs

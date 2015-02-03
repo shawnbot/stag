@@ -1,5 +1,5 @@
 {
-  "name": "swagger-static",
+  "name": "stag",
   "version": "0.1.0",
   "description": "Generate Swagger documentation, statically",
   "main": "index.js",

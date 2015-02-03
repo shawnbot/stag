@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ info.title }}</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>{{ info.title }}</h1>
+        <p class="version">
+          API version <span class="api-version">{{ apiVersion }}</span> /
+          <a href="http://swagger.io">Swagger</a> <span class="swagger-version">{{ swaggerVersion }}</span>
+        </p>
+      </div>
+    </header>
+
+    <section class="info">
+      <div class="container">
+        <p class="description">{{ info.description }}</p>
+        <p class="contact">Contact: <a href="mailto:{{ info.contact }}">{{ info.contact }}</a></p>
+      </div>
+    </section>
+
+    <div class="apis container">
+
+      {% for api in apis %}
+      <section class="api" id="api{{ api.path }}">
+        <h2 class="path">{{ api.path }}</h2>
+        <p class="description">{{ api.description }}</p>
+        {% for endpoint in api.apis %}
+        <section class="endpoint" id="api{{ endpoint.path }}">
+          <h3 class="path">{{ endpoint.path }}</h3>
+          {% for op in endpoint.operations %}
+          <section class="operation">
+            <h4>
+              <span class="method">{{ op.method }}</span>
+              <span class="path">{{ endpoint.path }}</span>
+            </h4>
+            <p class="summary">{{ op.summary }}</p>
+            {% if op.parameters %}
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              {% for param in op.parameters %}
+              <li class="parameter{% if param.required %} required{% endif %}">
+                <span class="name">{{ param.name }}</span>
+                <span class="required-optional">
+                  ({% if param.required %}required{% else %}optional{% endif %})
+                </span>
+              </li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </section>
+          {% endfor %}
+        </section>
+        {% endfor %}
+        </ul>
+      </section>
+      {% endfor %}
+
+    </div>
+  </body>
+</html>

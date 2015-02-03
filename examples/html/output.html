@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Swagger Sample App</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Swagger Sample App</h1>
+        <p class="version">
+          API version <span class="api-version">1.0.0</span> /
+          <a href="http://swagger.io">Swagger</a> <span class="swagger-version">1.2</span>
+        </p>
+      </div>
+    </header>
+
+    <section class="info">
+      <div class="container">
+        <p class="description">This is a sample server Petstore server.  You can find out more about Swagger 
+    at <a href="http://swagger.wordnik.com">http://swagger.wordnik.com</a> or on irc.freenode.net, #swagger.  For this sample,
+    you can use the api key "special-key" to test the authorization filters</p>
+        <p class="contact">Contact: <a href="mailto:apiteam@wordnik.com">apiteam@wordnik.com</a></p>
+      </div>
+    </section>
+
+    <div class="apis container">
+
+      
+      <section class="api" id="api/pet">
+        <h2 class="path">/pet</h2>
+        <p class="description">Operations about pets</p>
+        
+        <section class="endpoint" id="api/pet/{petId}">
+          <h3 class="path">/pet/{petId}</h3>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">GET</span>
+              <span class="path">/pet/{petId}</span>
+            </h4>
+            <p class="summary">Find pet by ID</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">petId</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">DELETE</span>
+              <span class="path">/pet/{petId}</span>
+            </h4>
+            <p class="summary">Deletes a pet</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">petId</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">POST</span>
+              <span class="path">/pet/{petId}</span>
+            </h4>
+            <p class="summary">Updates a pet in the store with form data</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">petId</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+              <li class="parameter">
+                <span class="name">name</span>
+                <span class="required-optional">
+                  (optional)
+                </span>
+              </li>
+              
+              <li class="parameter">
+                <span class="name">status</span>
+                <span class="required-optional">
+                  (optional)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">PATCH</span>
+              <span class="path">/pet/{petId}</span>
+            </h4>
+            <p class="summary">partial updates to a pet</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">petId</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+              <li class="parameter required">
+                <span class="name">body</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+        </section>
+        
+        <section class="endpoint" id="api/pet">
+          <h3 class="path">/pet</h3>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">POST</span>
+              <span class="path">/pet</span>
+            </h4>
+            <p class="summary">Add a new pet to the store</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">body</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">PUT</span>
+              <span class="path">/pet</span>
+            </h4>
+            <p class="summary">Update an existing pet</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">body</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+        </section>
+        
+        <section class="endpoint" id="api/pet/findByStatus">
+          <h3 class="path">/pet/findByStatus</h3>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">GET</span>
+              <span class="path">/pet/findByStatus</span>
+            </h4>
+            <p class="summary">Finds Pets by status</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">status</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+        </section>
+        
+        <section class="endpoint" id="api/pet/findByTags">
+          <h3 class="path">/pet/findByTags</h3>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">GET</span>
+              <span class="path">/pet/findByTags</span>
+            </h4>
+            <p class="summary">Finds Pets by tags</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">tags</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+        </section>
+        
+        <section class="endpoint" id="api/pet/uploadImage">
+          <h3 class="path">/pet/uploadImage</h3>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">POST</span>
+              <span class="path">/pet/uploadImage</span>
+            </h4>
+            <p class="summary">uploads an image</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter">
+                <span class="name">additionalMetadata</span>
+                <span class="required-optional">
+                  (optional)
+                </span>
+              </li>
+              
+              <li class="parameter">
+                <span class="name">file</span>
+                <span class="required-optional">
+                  (optional)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+        </section>
+        
+        </ul>
+      </section>
+      
+      <section class="api" id="api/user">
+        <h2 class="path">/user</h2>
+        <p class="description">Operations about user</p>
+        
+        <section class="endpoint" id="api/user">
+          <h3 class="path">/user</h3>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">POST</span>
+              <span class="path">/user</span>
+            </h4>
+            <p class="summary">Create user</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">body</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+        </section>
+        
+        <section class="endpoint" id="api/user/createWithArray">
+          <h3 class="path">/user/createWithArray</h3>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">POST</span>
+              <span class="path">/user/createWithArray</span>
+            </h4>
+            <p class="summary">Creates list of users with given input array</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">body</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+        </section>
+        
+        <section class="endpoint" id="api/user/createWithList">
+          <h3 class="path">/user/createWithList</h3>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">POST</span>
+              <span class="path">/user/createWithList</span>
+            </h4>
+            <p class="summary">Creates list of users with given list input</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">body</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+        </section>
+        
+        <section class="endpoint" id="api/user/{username}">
+          <h3 class="path">/user/{username}</h3>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">PUT</span>
+              <span class="path">/user/{username}</span>
+            </h4>
+            <p class="summary">Updated user</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">username</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+              <li class="parameter required">
+                <span class="name">body</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">DELETE</span>
+              <span class="path">/user/{username}</span>
+            </h4>
+            <p class="summary">Delete user</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">username</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">GET</span>
+              <span class="path">/user/{username}</span>
+            </h4>
+            <p class="summary">Get user by user name</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">username</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+        </section>
+        
+        <section class="endpoint" id="api/user/login">
+          <h3 class="path">/user/login</h3>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">GET</span>
+              <span class="path">/user/login</span>
+            </h4>
+            <p class="summary">Logs user into the system</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">username</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+              <li class="parameter required">
+                <span class="name">password</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+        </section>
+        
+        <section class="endpoint" id="api/user/logout">
+          <h3 class="path">/user/logout</h3>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">GET</span>
+              <span class="path">/user/logout</span>
+            </h4>
+            <p class="summary">Logs out current logged in user session</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+            </ul>
+            
+          </section>
+          
+        </section>
+        
+        </ul>
+      </section>
+      
+      <section class="api" id="api/store">
+        <h2 class="path">/store</h2>
+        <p class="description">Operations about store</p>
+        
+        <section class="endpoint" id="api/store/order/{orderId}">
+          <h3 class="path">/store/order/{orderId}</h3>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">DELETE</span>
+              <span class="path">/store/order/{orderId}</span>
+            </h4>
+            <p class="summary">Delete purchase order by ID</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">orderId</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">GET</span>
+              <span class="path">/store/order/{orderId}</span>
+            </h4>
+            <p class="summary">Find purchase order by ID</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">orderId</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+        </section>
+        
+        <section class="endpoint" id="api/store/order">
+          <h3 class="path">/store/order</h3>
+          
+          <section class="operation">
+            <h4>
+              <span class="method">POST</span>
+              <span class="path">/store/order</span>
+            </h4>
+            <p class="summary">Place an order for a pet</p>
+            
+            <h5>Parameters</h5>
+            <ul class="parameters">
+              
+              <li class="parameter required">
+                <span class="name">body</span>
+                <span class="required-optional">
+                  (required)
+                </span>
+              </li>
+              
+            </ul>
+            
+          </section>
+          
+        </section>
+        
+        </ul>
+      </section>
+      
+
+    </div>
+  </body>
+</html>

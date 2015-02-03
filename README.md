@@ -1,19 +1,18 @@
 # stag
-The [stag] Node module provides a [JavaScript API](index.js) and a [command
-line tool](#cli) for generating static documentation from [Swagger] API
-metadata.
+Stag provides a [JavaScript API](index.js) and a [command line tool](#cli)
+for generating static documentation from [Swagger] API metadata.
 
-See the [issues] for more info, and comment on one or [file an issue] if you
-have suggestions.
+See the [issues] for more info, and leave a comment or [file an issue] if
+you have suggestions.
 
-## Command Line Usage <a name="cli"></a>
+## <a name="cli"></a> Command Line Usage
 First, install stag via [npm]:
 
 ```sh
 npm install -g stag
 ```
 
-Next, write a simple [Django-style template]:
+Next, write a simple [template]:
 
 ```html
 <!DOCTYPE html>
@@ -77,6 +76,13 @@ Options:
   -v                print the version number and exit                           
 ```
 
+## Templates
+Stag uses [Nunjucks] to render templates, which supports a subset of the
+[template language](https://docs.djangoproject.com/en/1.7/topics/templates/)
+originally developed for [Django] and adopted by [Jinja], [Liquid], [Swig]
+[Plate], and many other template systems. There are some
+[caveats](https://github.com/shawnbot/stag/issues/5), though.
+
 ## Background
 At [18F] we're building [Swagger]-compliant APIs to make them more accessible
 and facilitate simpler, dynamically generated documentation for API users.
@@ -108,6 +114,10 @@ out the [issues] to see where I am and provide feedback.
 [SwaggerUI]: https://github.com/swagger-api/swagger-ui/
 [swagger-enhance]: https://github.com/shawnbot/swagger-enhance
 [swagger-template]: https://github.com/shawnbot/swagger-template
-[Django-style template]: https://docs.djangoproject.com/en/1.7/topics/templates/
+[Django]: https://djangoproject.com/
 [npm]: https://npmjs.com
 [stag]: https://npmjs.com/stag
+[Nunjucks]: http://mozilla.github.io/nunjucks/
+[Jinja]: http://jinja.pocoo.org/docs/dev/templates/
+[Liquid]: http://liquidmarkup.org/
+[Plate]: https://github.com/chrisdickinson/plate
